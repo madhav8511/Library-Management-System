@@ -4,7 +4,7 @@ operations, including process management, file handling, file locking, multithre
 communication. Socket programming is utilized for client-server communication, allowing multiple
 clients to access the library database simultaneously.
 
-#Functionalities
+# Functionalities
 1. User Authentication: Members are required to pass through a login system to access their
 accounts, ensuring data privacy and security.
 2. Administrative Access: Password-protected administrative access is provided to librarians,
@@ -15,3 +15,9 @@ ensuring efficient management of library resources.
 to protect critical data sections and ensure data consistency.
 5. Concurrent Access: The system employs socket programming to service multiple clients
 concurrently, facilitating seamless access to library resources.
+
+# How To Run
+1. Set up the correct file path according to your system in header file.
+2. Run gcc setdata.c to create admin and client's
+3. Now on one terminal run server side : gcc -pthread main_server.c server.c admin.c user.c
+4. And on another terminal run client side : gcc client.c user.c admin.c
