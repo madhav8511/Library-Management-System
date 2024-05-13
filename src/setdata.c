@@ -55,7 +55,7 @@ int main() {
     else
         printf("Client File Locked\n");
 
-    for(int i=1;i<=5;i++)
+    for(int i=1;i<=1;i++)
     {
         struct client *c = (struct client *)malloc(sizeof(struct client));
         c->id = i;
@@ -68,13 +68,13 @@ int main() {
         write(clt,c,sizeof(struct client));
         free(c);
     }
-    printf("5 Clients added successfully\n");
+    //printf("5 Clients added successfully\n");
     writelk.l_type=F_UNLCK;
     status = fcntl(ad,F_SETLKW,&writelk);
 
     //Read to confirm data
     clt = open(CLIENT_FILE,O_RDONLY,0744);
-    for(int i=0;i<5;i++)
+    for(int i=0;i<1;i++)
     {
         struct client *c = (struct client *)malloc(sizeof(struct client));
         read(clt,c,sizeof(struct client));

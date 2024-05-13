@@ -125,6 +125,22 @@ void server(int new_sd)
                         status = fcntl(fd,F_SETLKW,&readlk);
                         close(cd);
                     }
+                    else if(admin_choice == 6)
+                    {
+                        int st = show_all_users();
+                        char name[10]; read(new_sd,name,sizeof(name));
+                        char password[10]; read(new_sd,password,sizeof(password));
+
+                        struct client *c = (struct client *)malloc(sizeof(struct client));
+                        int got_id = st+1;
+                        c->id = got_id;
+                        strcpy(c->name,name);
+                        strcpy(c->password,password);
+                        for(int i=0;i<5;i++) c->borrowed_books[i] = -1;
+                        
+                        add_user(c);
+                        write(new_sd,&got_id,sizeof(got_id));
+                    }
                     else if(admin_choice == 0)
                     {
                         printf("Admin Logout\n");

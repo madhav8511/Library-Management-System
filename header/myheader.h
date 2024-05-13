@@ -48,6 +48,7 @@ void *connection(void *nsd);
 
 //Admin functions
 void menu();
+void add_user(struct client *c);
 int add_book(struct book *b);
 int show_all_books();
 int delete_book(int id);

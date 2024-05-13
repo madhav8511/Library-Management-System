@@ -9,6 +9,7 @@ void menu()
     printf("3. Update a Book\n");
     printf("4. Show All Books\n");
     printf("5. Show All User Linked\n");
+    printf("6. Add a User\n");
     printf("\n");
 }
 
@@ -162,4 +163,24 @@ struct book * book_detail(int id)
     readlk.l_type = F_UNLCK;
     status = fcntl(bd,F_SETLKW,&readlk);
     close(bd);
+}
+
+void add_user(struct client *c)
+{
+    int cd = open(CLIENT_FILE,O_WRONLY,0744);
+    struct flock writelk;
+    writelk.l_type=F_WRLCK; 
+    writelk.l_whence=SEEK_SET; 
+    writelk.l_start=0; 
+    writelk.l_len=0; 
+    writelk.l_pid=getpid(); 
+
+    // Set a write lock on file
+    int status = fcntl(cd,F_SETLKW,&writelk);
+    lseek(cd,0,SEEK_END);
+    write(cd,c,sizeof(struct client));
+
+    writelk.l_type = F_UNLCK;
+    status = fcntl(cd,F_SETLKW,&writelk);
+    close(cd);
 }

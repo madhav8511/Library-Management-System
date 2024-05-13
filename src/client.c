@@ -130,6 +130,20 @@ int main()
                         }
                         printf("\n");
                     }
+                    else if(fnchoice == 6)
+                    {
+                        printf("Enter user-name: ");
+                        char name[10]; scanf("%s",name);
+                        write(sd,name,sizeof(name));
+                        printf("Enter password: ");
+                        char pass[10]; scanf("%s",pass);
+                        write(sd,pass,sizeof(pass));
+
+                        int id;
+                        read(sd,&id,sizeof(int));
+                        printf("User registered with ID: %d\n",id);
+                        printf("Remember your id and password for authentication\n");
+                    }
                     else if(fnchoice == 0) 
                     {
                         printf("Successfully Logout\n");
@@ -146,6 +160,7 @@ int main()
         }
         else if(choice == 2)
         {
+            printf("\n");
             printf("--- Welcome to User Portal ---\n");
             printf("Enter User Id: ");
             int user_id;
