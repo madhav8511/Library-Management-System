@@ -40,6 +40,7 @@ void server(int new_sd)
                 {
                     read_count = read(new_sd,&admin_choice,sizeof(int));
                     printf("Recived Admin Choice: %d\n",admin_choice);
+                    //Add a book...
                     if(admin_choice == 1)
                     {
                         int id; read(new_sd,&id,sizeof(int));
@@ -55,6 +56,7 @@ void server(int new_sd)
                         if(status == 1) write(new_sd,"S",sizeof("S"));
                         else write(new_sd,"F",sizeof("F"));
                     }
+                    //Delete a book
                     else if(admin_choice == 2)
                     {
                         int id;
@@ -63,6 +65,7 @@ void server(int new_sd)
                         if(status == 1) write(new_sd,"S",sizeof("S"));
                         else write(new_sd,"F",sizeof("F"));
                     }
+                    //Update a book....
                     else if(admin_choice == 3)
                     {
                         int id; read(new_sd,&id,sizeof(int));
@@ -77,6 +80,7 @@ void server(int new_sd)
                         if(status == 1) write(new_sd,"S",sizeof("S"));
                         else write(new_sd,"F",sizeof("F"));
                     }
+                    //Show all books present in library or not...
                     else if(admin_choice == 4)
                     {
                         int st = show_all_books();
@@ -101,6 +105,7 @@ void server(int new_sd)
                         status = fcntl(bd,F_SETLKW,&readlk);
                         close(bd);
                     }
+                    //Show the list of user that are linked with library...
                     else if(admin_choice == 5)
                     {
                         int st = show_all_users();
@@ -125,6 +130,7 @@ void server(int new_sd)
                         status = fcntl(fd,F_SETLKW,&readlk);
                         close(cd);
                     }
+                    //Add/Link a new user with library...
                     else if(admin_choice == 6)
                     {
                         int st = show_all_users();
@@ -141,6 +147,7 @@ void server(int new_sd)
                         add_user(c);
                         write(new_sd,&got_id,sizeof(got_id));
                     }
+                    //Choice to logout....
                     else if(admin_choice == 0)
                     {
                         printf("Admin Logout\n");
@@ -200,6 +207,7 @@ void server(int new_sd)
                 {
                     read_count = read(new_sd,&user_choice,sizeof(int));
                     printf("Recived User Choice: %d\n",user_choice);
+                    //Show all books present in library...
                     if(user_choice == 1)
                     {
                         int st = show_all_books();
@@ -224,6 +232,7 @@ void server(int new_sd)
                         status = fcntl(fd,F_SETLKW,&readlk);
                         close(bd);
                     }
+                    //Borrow a book
                     else if(user_choice == 2)
                     {
                         int id;
@@ -233,6 +242,7 @@ void server(int new_sd)
                         else if(status == 0) write(new_sd,"F",sizeof("F"));
                         else write(new_sd,"M",sizeof("M"));
                     }
+                    //Deposit / return a book to library...
                     else if(user_choice == 3)
                     {
                         int id;
@@ -242,12 +252,25 @@ void server(int new_sd)
                         else if(status == 0) write(new_sd,"F",sizeof("F"));
                         else write(new_sd,"M",sizeof("M"));
                     }
+                    //User detail's.....
                     else if(user_choice == 4)
                     {
                         struct client *c = (struct client *)malloc(sizeof(struct client));
                         c = user_details(client_id);
                         write(new_sd,c,sizeof(struct client));
                     }
+                    //Search_book ....
+                    else if(user_choice == 5)
+                    {
+                        char title[10];
+                        read(new_sd,title,sizeof(title));
+                        int status = search_book(title);
+                        write(new_sd,&status,sizeof(int));
+                        
+                        if(status == 0) write(new_sd,"F",sizeof("F"));
+                        else write(new_sd,"S",sizeof("S"));
+                    }
+                    //For logout...
                     else if(user_choice == 0)
                     {
                         printf("User Logout\n");

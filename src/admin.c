@@ -13,6 +13,7 @@ void menu()
     printf("\n");
 }
 
+//Add a book in library...
 int add_book(struct book *b)
 {
     int fd = open(BOOK_FILE, O_CREAT | O_RDWR, 0744);
@@ -46,6 +47,7 @@ int add_book(struct book *b)
     return 1;
 }
 
+//Count of total books...
 int show_all_books()
 {
     int fd = open(BOOK_FILE,O_RDONLY,0744);
@@ -58,6 +60,7 @@ int show_all_books()
     return num_structs;
 }
 
+//Count of total users...
 int show_all_users()
 {
     int fd = open(CLIENT_FILE,O_RDONLY,0744);
@@ -70,6 +73,7 @@ int show_all_users()
     return num_structs;
 }
 
+//Delete a book...
 int delete_book(int id)
 {
     int fd = open(BOOK_FILE, O_CREAT | O_RDWR, 0744);
@@ -104,6 +108,7 @@ int delete_book(int id)
     return 0;
 }
 
+//Update a book...
 int update_book(struct book *b)
 {
     int fd = open(BOOK_FILE, O_CREAT | O_RDWR, 0744);
@@ -139,6 +144,7 @@ int update_book(struct book *b)
     return 0;
 }
 
+//Book details like : book-title, book-quantity...
 struct book * book_detail(int id)
 {
     int bd = open(BOOK_FILE,O_RDONLY,0744);
@@ -165,6 +171,7 @@ struct book * book_detail(int id)
     close(bd);
 }
 
+//Add / Link a user to library....
 void add_user(struct client *c)
 {
     int cd = open(CLIENT_FILE,O_WRONLY,0744);

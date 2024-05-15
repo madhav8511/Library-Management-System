@@ -16,7 +16,7 @@ int main()
     while(1)
     {
         printf("\n");
-        printf("LOG-IN AS A\n");
+        printf("LOG-IN AS: \n");
         printf("0. TO CLOSE THE APPLICATION\n");
         printf("1. ADMIN\n");
         printf("2. USER\n");
@@ -53,6 +53,7 @@ int main()
                     printf("Enter a valid choice from Admin menu: ");
                     scanf("%d",&fnchoice);
                     write(sd,&fnchoice,sizeof(int));
+                    //Add a book..
                     if(fnchoice == 1)
                     {
                         printf("Enter Book Id: ");
@@ -64,20 +65,24 @@ int main()
 
                         char response[10];
                         read(sd,response,sizeof(response));
+                        printf("\n");
                         if(strcmp(response,"S") == 0) printf("Book added successfully\n");
                         else printf("Book with same id already exist\n");
                         printf("\n");
                     }
+                    //Delete a book...
                     else if(fnchoice == 2)
                     {
                         printf("Enter Book ID: ");
                         int id; scanf("%d",&id); write(sd,&id,sizeof(int));
                         char response[10];
                         read(sd,response,sizeof(response));
+                        printf("\n");
                         if(strcmp(response,"S") == 0) printf("Book deleted successfully\n");
                         else printf("Sorry book doesn't exist\n");
                         printf("\n");
                     }
+                    //Update a book...
                     else if(fnchoice == 3)
                     {
                         printf("Enter Book Id: ");
@@ -88,10 +93,12 @@ int main()
                         int quantity; scanf("%d",&quantity); write(sd,&quantity,sizeof(int));
                         char response[10];
                         read(sd,response,sizeof(response));
+                        printf("\n");
                         if(strcmp(response,"S") == 0) printf("Book Updated successfully\n");
                         else printf("Sorry book doesn't exist\n");
                         printf("\n");
                     }
+                    // Show all books....
                     else if(fnchoice == 4)
                     {
                         int no_of_books;
@@ -107,6 +114,7 @@ int main()
                         }
                         printf("\n");
                     }
+                    //Show all user linked with library...
                     else if(fnchoice == 5)
                     {
                         int no_of_users;
@@ -130,6 +138,7 @@ int main()
                         }
                         printf("\n");
                     }
+                    //Add a user...
                     else if(fnchoice == 6)
                     {
                         printf("Enter user-name: ");
@@ -141,8 +150,10 @@ int main()
 
                         int id;
                         read(sd,&id,sizeof(int));
+                        printf("\n");
                         printf("User registered with ID: %d\n",id);
                         printf("Remember your id and password for authentication\n");
+                        printf("\n");
                     }
                     else if(fnchoice == 0) 
                     {
@@ -187,10 +198,12 @@ int main()
                     printf("Enter a valid choice from User menu: ");
                     scanf("%d",&fnchoice);
                     write(sd,&fnchoice,sizeof(int));
+                    //Show all books present in library...
                     if(fnchoice == 1)
                     {
                         int no_of_books;
                         read(sd,&no_of_books,sizeof(int));
+                        if(no_of_books <= 0) no_of_books=0;
                         printf("There are %d books present in Library\n",no_of_books);
                         printf("\n");
                         for(int i=0;i<no_of_books;i++)
@@ -201,26 +214,33 @@ int main()
                         }
                         printf("\n");
                     }
+                    //Borrow a book...
                     else if(fnchoice == 2)
                     {
                         printf("Enter Book Id: ");
                         int id; scanf("%d",&id); write(sd,&id,sizeof(int));
                         char response[10];
                         read(sd,response,sizeof(response));
+                        printf("\n");
                         if(strcmp(response,"S") == 0) printf("Book Borrowed successfully\n");
                         else if(strcmp(response,"F") == 0) printf("Sorry This Book is currently not available\n");
                         else printf("You are on your limit for borrowing books.\n");
+                        printf("\n");
                     }
+                    //Deposit a book...
                     else if(fnchoice == 3)
                     {
                         printf("Enter Book Id: ");
                         int id; scanf("%d",&id); write(sd,&id,sizeof(int));
                         char response[10];
                         read(sd,response,sizeof(response));
+                        printf("\n");
                         if(strcmp(response,"S") == 0) printf("Book Deposit successfully\n");
                         else if(strcmp(response,"F") == 0) printf("Sorry This Book is not the part of our Library\n");
                         else printf("Sorry this book is not issued by You\n");
+                        printf("\n");
                     }
+                    //Show user it's detail....
                     else if(fnchoice == 4)
                     {
                         struct client *c = (struct client *)malloc(sizeof(struct client));
@@ -241,6 +261,23 @@ int main()
                         }
                         printf("\n");
                     }
+                    //Search a book by title....
+                    else if(fnchoice == 5)
+                    {
+                        char title[10];
+                        printf("Enter book title: "); scanf("%s",title);
+                        write(sd,title,sizeof(title));
+
+                        int id; read(sd,&id,sizeof(int));
+
+                        char response[10];
+                        read(sd,response,sizeof(response));
+                        printf("\n");
+                        if(strcmp(response,"S") == 0) printf("Yes, that book is present in the library with ID: %d\n",id);
+                        else printf("Sorry that book is currently not available\n");
+                        printf("\n");
+                    }
+                    //To logout....
                     else if(fnchoice == 0)
                     {
                         printf("Successfully Logout\n");

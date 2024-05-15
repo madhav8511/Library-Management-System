@@ -61,4 +61,5 @@ void show_menu();
 int borrow_a_book(int client_id,int id);
 int deposit_a_book(int client_id,int id);
 struct client * user_details(int id);
+int search_book(char title[10]);
 #endif

@@ -1,3 +1,4 @@
+//File which initially set a new admin and one client further more you can add a client by admin portal.....
 #include "../header/myheader.h"
 
 int main() {
@@ -31,6 +32,7 @@ int main() {
     a->id = 1;
     strcpy(a->password, "admin");
     int success = write(ad, a, sizeof(struct admin));
+    printf("Admin id: %d, Admin-password: %s\n",a->id,a->password);
     if(success == -1) printf("Error in data written\n");
     else printf("Admin added successfully\n"); 
 
