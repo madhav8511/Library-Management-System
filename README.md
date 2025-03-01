@@ -17,7 +17,18 @@ to protect critical data sections and ensure data consistency.
 concurrently, facilitating seamless access to library resources.
 
 # How To Run
-1. Set up the correct file path according to your system in header file.
-2. Run gcc setdata.c to create admin and client's
-3. Now on one terminal run server side : gcc -pthread main_server.c server.c admin.c user.c
-4. And on another terminal run client side : gcc client.c user.c admin.c
+- Set up the correct file path according to your system in header file.
+-  To create admin and client's run the following command :
+```bash
+gcc setdata.c
+```
+
+- Run server side on one terminal screen with the following command:
+```bash
+gcc -pthread main_server.c server.c admin.c user.c
+```
+
+- And run the client side on another terminal screen with the command :
+```bash
+gcc client.c user.c admin.c
+```
